@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        #form_login input{
+            display: block;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <form onsubmit="loginUser(event)", id="form_login">
+        <h1>Login Authentication</h1>
+        <input type="password" placeholder="UserName" name="username">
+        <input type="password" placeholder="Password" name="password">
+        <input type="submit">
+    </form>
+</body>
+</html>
+
+<script>
+    if(localStorage.getItem("dataUser")===null){
+        localStorage.setItem("dataUser",JSON.stringify([]));
+    }
+    function loginUser(ev){
+        ev.preventDefault();
+        let form = document.getElementById("form_login");
+        
+        let userData = {
+            username:form.username.value,
+            password:form.password.value,
+        }
+        let data_to_send = JSON.stringify(userData);
+        console.log(data_to_send)
+
+        fetch("https://masai-api-mocker.herokuapp.com/auth/login",{
+            method: "POST",
+            body:data_to_send,
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        .then((res)=>{
+            return res.json();
+        })
+        .then((res)=>{
+            console.log(res);
+            if(res.error==false){
+                localStorage.setItem("dataUser",JSON.stringify([{username: userData.username}]));
+                window.location.href = 'youtube.html';
+            }
+            else{
+                alert("Wrong Details Entered");
+            }
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+
+        /*/*fetch("https://masai-api-mocker.herokuapp.com/auth/login",{
+            method: "POST",
+            body: dataToSend,
+            headers:{
+                "Content-Type": "application/json",
+            }
+        })
+        .then((res)=>{
+            return res.json();
+        })
+        .then(({error,token})=>{
+            if(error==false){
+                window.location.href = "index.html";
+                localStorage.setItem("userData",JSON.stringify([{username: enteredData.username}]));
+                
+                
+            }
+            else{
+                alert("Wrong Details Entered");
+            }
+        })
+        .catch((err)=>{
+            console.log("Error in fetching the details",err)
+        })*/
+    }
+</script>
