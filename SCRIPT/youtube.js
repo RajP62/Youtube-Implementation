@@ -1,7 +1,5 @@
 let dataUser = JSON.parse(localStorage.getItem("dataUser"));
-let userName = dataUser[0].username;
 let spanEl = document.getElementById("displayName");
-spanEl.textContent = userName;
 let mainCont = document.getElementById("content");
 let key = "AIzaSyAnBaW48ziKnGqp-wJcZoZuyWom_CNt55M";
 getTrendingData();
