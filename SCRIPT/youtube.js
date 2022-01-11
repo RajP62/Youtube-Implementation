@@ -5,6 +5,7 @@ let key = "AIzaSyAnBaW48ziKnGqp-wJcZoZuyWom_CNt55M";
 getTrendingData();
 
 async function getData(){
+    let key = "AIzaSyAnBaW48ziKnGqp-wJcZoZuyWom_CNt55M";
     let inp = document.getElementById("searchInp").value;
     let body = await fetch(`https://youtube.googleapis.com/youtube/v3/search?q=${inp}&type=video&key=${key}&maxResults=20&part=snippet`);
     let res = await body.json();
